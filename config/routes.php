@@ -51,11 +51,30 @@ $routes->scope('/', function (RouteBuilder $builder) {
      * to use (in this case, templates/Pages/home.php)...
      */
     $builder->connect('/', ['controller' => 'Pages', 'action' => 'display', 'home']);
-
-    /*
-     * ...and connect the rest of 'Pages' controller's URLs.
-     */
     $builder->connect('/pages/*', ['controller' => 'Pages', 'action' => 'display']);
+
+    $builder->scope('/files', ['controller' => 'Files'], function (RouteBuilder $builder) {
+        $builder->get('/', ['action' => 'index'], 'files:list');
+
+        $builder->connect('/add', ['action' => 'add'], ['_name' => 'files:add'])
+            ->setMethods(['get', 'post']);
+
+        $builder->get('/{id}', ['action' => 'view'], 'files:view')
+            ->setPass(['id']);
+
+        $builder->connect('/{id}/edit', ['action' => 'edit'], ['_name' => 'files:edit'])
+            ->setPass(['id']);
+
+        $builder->get('/{id}/delete', ['action' => 'delete'], 'files:delete')
+            ->setPass(['id']);
+    });
+
+    $builder->scope('/share-tokens', ['controller' => 'FileShareTokens'], function (RouteBuilder $builder) {
+        $builder->post('/add', ['action' => 'add'], 'fileShareTokens:add');
+
+        $builder->get('/{id}', ['action' => 'view'], 'fileShareTokens:view')
+            ->setPass(['id']);
+    });
 
     /*
      * Connect catchall routes for all controllers.
