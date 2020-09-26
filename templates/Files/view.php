@@ -51,6 +51,34 @@
                     <td><?= h($file->modified) ?></td>
                 </tr>
             </table>
+            <div class="related">
+                <h4><?= __('Related File Share Links') ?></h4>
+                <?= $this->Form->postButton(
+                    'Create Share Link',
+                    ['controller' => 'FileShareLinks', 'action' => 'add'],
+                    ['data' => ['file_id' => $file->id]]
+                ) ?>
+                <?php if (!empty($file->file_share_links)) : ?>
+                <div class="table-responsive">
+                    <table>
+                        <tr>
+                            <th><?= __('Token') ?></th>
+                            <th><?= __('Expires At') ?></th>
+                            <th class="actions"><?= __('Actions') ?></th>
+                        </tr>
+                        <?php foreach ($file->file_share_links as $fileShareLinks) : ?>
+                        <tr>
+                            <td><?= h($fileShareLinks->token) ?></td>
+                            <td><?= h($fileShareLinks->expires_at) ?></td>
+                            <td class="actions">
+                                <?= $this->Form->postLink(__('Delete'), ['controller' => 'FileShareLinks', 'action' => 'delete', $fileShareLinks->id], ['confirm' => __('Are you sure you want to delete # {0}?', $fileShareLinks->id)]) ?>
+                            </td>
+                        </tr>
+                        <?php endforeach; ?>
+                    </table>
+                </div>
+                <?php endif; ?>
+            </div>
         </div>
     </div>
 </div>
