@@ -41,9 +41,9 @@ class FileShareLinksFixture extends TestFixture
                 'id' => 1,
                 'file_id' => 1,
                 'token' => 'Lorem ipsum dolor sit amet',
-                'expires_at' => 1601084872,
-                'created' => 1601084872,
-                'modified' => 1601084872,
+                'expires_at' => 1601086122,
+                'created' => 1601086122,
+                'modified' => 1601086122,
             ],
         ];
         parent::init();

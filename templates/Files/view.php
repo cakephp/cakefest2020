@@ -53,29 +53,24 @@
             </table>
             <div class="related">
                 <h4><?= __('Related File Share Links') ?></h4>
+                <?= $this->Form->postButton(
+                    'Create Share Link',
+                    ['controller' => 'FileShareLinks', 'action' => 'add'],
+                    ['data' => ['file_id' => $file->id]]
+                ) ?>
                 <?php if (!empty($file->file_share_links)) : ?>
                 <div class="table-responsive">
                     <table>
                         <tr>
-                            <th><?= __('Id') ?></th>
-                            <th><?= __('File Id') ?></th>
                             <th><?= __('Token') ?></th>
                             <th><?= __('Expires At') ?></th>
-                            <th><?= __('Created') ?></th>
-                            <th><?= __('Modified') ?></th>
                             <th class="actions"><?= __('Actions') ?></th>
                         </tr>
                         <?php foreach ($file->file_share_links as $fileShareLinks) : ?>
                         <tr>
-                            <td><?= h($fileShareLinks->id) ?></td>
-                            <td><?= h($fileShareLinks->file_id) ?></td>
                             <td><?= h($fileShareLinks->token) ?></td>
                             <td><?= h($fileShareLinks->expires_at) ?></td>
-                            <td><?= h($fileShareLinks->created) ?></td>
-                            <td><?= h($fileShareLinks->modified) ?></td>
                             <td class="actions">
-                                <?= $this->Html->link(__('View'), ['controller' => 'FileShareLinks', 'action' => 'view', $fileShareLinks->id]) ?>
-                                <?= $this->Html->link(__('Edit'), ['controller' => 'FileShareLinks', 'action' => 'edit', $fileShareLinks->id]) ?>
                                 <?= $this->Form->postLink(__('Delete'), ['controller' => 'FileShareLinks', 'action' => 'delete', $fileShareLinks->id], ['confirm' => __('Are you sure you want to delete # {0}?', $fileShareLinks->id)]) ?>
                             </td>
                         </tr>
