@@ -51,11 +51,35 @@ $routes->scope('/', function (RouteBuilder $builder) {
      * to use (in this case, templates/Pages/home.php)...
      */
     $builder->connect('/', ['controller' => 'Pages', 'action' => 'display', 'home']);
-
-    /*
-     * ...and connect the rest of 'Pages' controller's URLs.
-     */
     $builder->connect('/pages/*', ['controller' => 'Pages', 'action' => 'display']);
+
+
+    // Above file routes to prevent overlap with /files/{id}
+    $builder->scope('/files/share', ['controller' => 'FileShareLinks'], function (RouteBuilder $builder) {
+        $builder->post('/add', ['action' => 'add'], 'fileShareLinks:add');
+
+        $builder->get('/{token}', ['action' => 'view'], 'fileShareLinks:view')
+            ->setPass(['token']);
+
+        $builder->post('/{id}/delete', ['action' => 'delete'], 'fileShareLinks:delete')
+            ->setPass(['id']);
+    });
+
+    $builder->scope('/files', ['controller' => 'Files'], function (RouteBuilder $builder) {
+        $builder->get('/', ['action' => 'index'], 'files:list');
+
+        $builder->connect('/add', ['action' => 'add'], ['_name' => 'files:add'])
+            ->setMethods(['get', 'post']);
+
+        $builder->get('/{id}', ['action' => 'view'], 'files:view')
+            ->setPass(['id']);
+
+        $builder->connect('/{id}/edit', ['action' => 'edit'], ['_name' => 'files:edit'])
+            ->setPass(['id']);
+
+        $builder->post('/{id}/delete', ['action' => 'delete'], 'files:delete')
+            ->setPass(['id']);
+    });
 
     /*
      * Connect catchall routes for all controllers.
