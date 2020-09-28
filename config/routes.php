@@ -53,6 +53,18 @@ $routes->scope('/', function (RouteBuilder $builder) {
     $builder->connect('/', ['controller' => 'Pages', 'action' => 'display', 'home']);
     $builder->connect('/pages/*', ['controller' => 'Pages', 'action' => 'display']);
 
+
+    // Above file routes to prevent overlap with /files/{id}
+    $builder->scope('/files/share', ['controller' => 'FileShareLinks'], function (RouteBuilder $builder) {
+        $builder->post('/add', ['action' => 'add'], 'fileShareLinks:add');
+
+        $builder->get('/{token}', ['action' => 'view'], 'fileShareLinks:view')
+            ->setPass(['token']);
+
+        $builder->post('/{id}/delete', ['action' => 'delete'], 'fileShareLinks:delete')
+            ->setPass(['id']);
+    });
+
     $builder->scope('/files', ['controller' => 'Files'], function (RouteBuilder $builder) {
         $builder->get('/', ['action' => 'index'], 'files:list');
 
@@ -65,14 +77,7 @@ $routes->scope('/', function (RouteBuilder $builder) {
         $builder->connect('/{id}/edit', ['action' => 'edit'], ['_name' => 'files:edit'])
             ->setPass(['id']);
 
-        $builder->get('/{id}/delete', ['action' => 'delete'], 'files:delete')
-            ->setPass(['id']);
-    });
-
-    $builder->scope('/share-tokens', ['controller' => 'FileShareTokens'], function (RouteBuilder $builder) {
-        $builder->post('/add', ['action' => 'add'], 'fileShareTokens:add');
-
-        $builder->get('/{id}', ['action' => 'view'], 'fileShareTokens:view')
+        $builder->post('/{id}/delete', ['action' => 'delete'], 'files:delete')
             ->setPass(['id']);
     });
 
