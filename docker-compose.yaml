@@ -1,0 +1,26 @@
+version: '3'
+services:
+  postgres:
+    image: postgres
+    container_name: postgres
+    environment:
+      - POSTGRES_HOST_AUTH_METHOD=trust
+    # Expose the port on your local machine.
+    # This is not needed to link containers.
+    # BUT, it is handy for connecting to your
+    # database with something like DataGrip from
+    # you local host machine.
+    ports:
+      - '5442:5432'
+
+  php:
+    image: webdevops/php-apache:7.4
+    container_name: cakephp
+    working_dir: /application/webroot
+    volumes:
+      - ./:/application
+    environment:
+      - WEB_DOCUMENT_ROOT=/application/webroot
+      - DATABASE_URL=postgres://postgres:@postgres:5432/postgres
+    ports:
+      - "8099:80"
