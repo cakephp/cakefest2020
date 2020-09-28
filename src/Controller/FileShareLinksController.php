@@ -15,32 +15,18 @@ use Cake\Utility\Security;
 class FileShareLinksController extends AppController
 {
     /**
-     * Index method
-     *
-     * @return \Cake\Http\Response|null|void Renders view
-     */
-    public function index()
-    {
-        $this->paginate = [
-            'contain' => ['Files'],
-        ];
-        $fileShareLinks = $this->paginate($this->FileShareLinks);
-
-        $this->set(compact('fileShareLinks'));
-    }
-
-    /**
-     * View method
+     * View by token method
      *
      * @param string|null $id File Share Link id.
      * @return \Cake\Http\Response|null|void Renders view
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view($id = null)
+    public function view($token = null)
     {
-        $fileShareLink = $this->FileShareLinks->get($id, [
-            'contain' => ['Files'],
-        ]);
+        $fileShareLink = $this->FileShareLinks
+            ->findByToken($token)
+            ->contain('Files')
+            ->firstOrFail();
 
         $this->set(compact('fileShareLink'));
     }
