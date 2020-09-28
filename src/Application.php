@@ -26,7 +26,6 @@ use Cake\Core\Exception\MissingPluginException;
 use Cake\Error\Middleware\ErrorHandlerMiddleware;
 use Cake\Http\BaseApplication;
 use Cake\Http\Middleware\BodyParserMiddleware;
-use Cake\Http\Middleware\CsrfProtectionMiddleware;
 use Cake\Http\MiddlewareQueue;
 use Cake\Routing\Middleware\AssetMiddleware;
 use Cake\Routing\Middleware\RoutingMiddleware;
@@ -156,6 +155,8 @@ class Application extends BaseApplication
             'fields' => $fields,
             'loginUrl' => '/users/login'
         ]);
+        // Fileshare links have their own authentication.
+        $service->loadAuthenticator('FileShareLink');
 
         // Load identifiers
         $service->loadIdentifier('Authentication.Password', compact('fields'));
