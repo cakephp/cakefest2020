@@ -4,12 +4,9 @@ services:
     image: postgres
     container_name: postgres
     environment:
-      - POSTGRES_HOST_AUTH_METHOD=trust
-    # Expose the port on your local machine.
-    # This is not needed to link containers.
-    # BUT, it is handy for connecting to your
-    # database with something like DataGrip from
-    # you local host machine.
+      - POSTGRES_USER=my_app
+      - POSTGRES_PASSWORD=secret
+      - POSTGRES_DB=my_app
     ports:
       - '5442:5432'
 
@@ -21,6 +18,6 @@ services:
       - ./:/application
     environment:
       - WEB_DOCUMENT_ROOT=/application/webroot
-      - DATABASE_URL=postgres://postgres:@postgres:5432/postgres
+      - DATABASE_URL=postgres://my_app:secret@postgres:5432/my_app
     ports:
       - "8099:80"

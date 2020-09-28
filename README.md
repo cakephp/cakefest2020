@@ -1,14 +1,20 @@
-# CakePHP Application Skeleton
+# Cakefest 2020
 
-[![Build Status](https://img.shields.io/github/workflow/status/cakephp/app/CakePHP%20App%20CI/master?style=flat-square)](https://github.com/cakephp/app/actions)
-[![Total Downloads](https://img.shields.io/packagist/dt/cakephp/app.svg?style=flat-square)](https://packagist.org/packages/cakephp/app)
-[![PHPStan](https://img.shields.io/badge/PHPStan-level%207-brightgreen.svg?style=flat-square)](https://github.com/phpstan/phpstan)
-
-A skeleton for creating applications with [CakePHP](https://cakephp.org) 4.x.
+An example application to play with [CakePHP](https://cakephp.org) 4.x.
 
 The framework source code can be found here: [cakephp/cakephp](https://github.com/cakephp/cakephp).
 
 ## Installation
+
+### Using docker
+
+1. Install docker and docker-compose
+2. Running `docker-compose up` will create 2 instances, one named `postgres` and another one named `cakephp`
+3. Run the cakephp console using `docker exec -it cakephp /application/bin/cake`
+4. Open the cakephp application using `http://localhost:8099`
+5. Restore the example database dump using `cat cakefest2020.sql |docker exec -i postgres psql -Umy_app` or using your favourite database client connecting to server `localhost:5442` user `my_app` password `secret`
+
+### Using your local environment
 
 1. Download [Composer](https://getcomposer.org/doc/00-intro.md) or update `composer self-update`.
 2. Run `php composer.phar create-project --prefer-dist cakephp/app [app_name]`.
@@ -33,12 +39,6 @@ bin/cake server -p 8765
 ```
 
 Then visit `http://localhost:8765` to see the welcome page.
-
-## Update
-
-Since this skeleton is a starting point for your application and various files
-would have been modified as per your needs, there isn't a way to provide
-automated upgrades, so you have to do any updates manually.
 
 ## Configuration
 
