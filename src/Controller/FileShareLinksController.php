@@ -27,8 +27,9 @@ class FileShareLinksController extends AppController
             ->findByToken($token)
             ->contain('Files')
             ->firstOrFail();
+        $this->Authorization->authorize($fileShareLink->file);
 
-        $this->set(compact('fileShareLink'));
+        $this->redirect(['_name' => 'files:view', $fileShareLink->file->id]);
     }
 
     /**
@@ -41,6 +42,8 @@ class FileShareLinksController extends AppController
         $this->request->allowMethod('post');
 
         $fileShareLink = $this->FileShareLinks->newEmptyEntity();
+        $this->Authorization->authorize($fileShareLink);
+
         if ($this->request->is('post')) {
             $data = $this->request->getData();
             $data['token'] = Security::randomString(64);

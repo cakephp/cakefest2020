@@ -22,6 +22,8 @@ class FilesController extends AppController
             'contain' => ['Groups'],
         ];
         $files = $this->paginate($this->Files);
+        // TODO add owner/group permissions
+        $this->Authorization->skipAuthorization();
 
         $this->set(compact('files'));
     }
@@ -38,6 +40,7 @@ class FilesController extends AppController
         $file = $this->Files->get($id, [
             'contain' => ['Groups'],
         ]);
+        $this->Authorization->authorize($file);
 
         $this->set(compact('file'));
     }
@@ -50,6 +53,8 @@ class FilesController extends AppController
     public function add()
     {
         $file = $this->Files->newEmptyEntity();
+        $this->Authorization->authorize($file);
+
         if ($this->request->is('post')) {
             $file = $this->Files->patchEntity($file, $this->request->getData());
             if ($this->Files->save($file)) {
@@ -75,6 +80,8 @@ class FilesController extends AppController
         $file = $this->Files->get($id, [
             'contain' => [],
         ]);
+        $this->Authorization->authorize($file);
+
         if ($this->request->is(['patch', 'post', 'put'])) {
             $file = $this->Files->patchEntity($file, $this->request->getData());
             if ($this->Files->save($file)) {
@@ -99,6 +106,8 @@ class FilesController extends AppController
     {
         $this->request->allowMethod(['post', 'delete']);
         $file = $this->Files->get($id);
+        $this->Authorization->authorize($file);
+
         if ($this->Files->delete($file)) {
             $this->Flash->success(__('The file has been deleted.'));
         } else {
