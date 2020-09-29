@@ -3,10 +3,12 @@ declare(strict_types=1);
 
 namespace App\Model\Table;
 
+use Cake\I18n\FrozenTime;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
+use RuntimeException;
 
 /**
  * FileShareLinks Model
@@ -91,5 +93,16 @@ class FileShareLinksTable extends Table
         $rules->add($rules->existsIn(['file_id'], 'Files'), ['errorField' => 'file_id']);
 
         return $rules;
+    }
+
+    protected function findLiveToken(Query $query, array $options): Query
+    {
+        if (empty($options['token'])) {
+            throw new RuntimeException('The `token` option is required.');
+        }
+        return $query->where([
+            'token' => $options['token'],
+            'expires_at >=' => FrozenTime::now(),
+        ]);
     }
 }

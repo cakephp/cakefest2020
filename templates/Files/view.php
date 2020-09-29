@@ -3,20 +3,29 @@
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\File $file
  */
+
+use App\Model\Entity\FileShareLink;
 use Cake\Routing\Router;
 ?>
 <div class="row">
     <aside class="column">
         <div class="side-nav">
             <h4 class="heading"><?= __('Actions') ?></h4>
-            <?= $this->Html->link(__('Edit File'), Router::pathUrl('Files::edit', [$file->id]), ['class' => 'side-nav-item']) ?>
-            <?= $this->Form->postLink(
+            <?php
+            if ($identity->can('edit', $file)) {
+                echo $this->Html->link(__('Edit File'), Router::pathUrl('Files::edit', [$file->id]), ['class' => 'side-nav-item']);
+            }
+            if ($identity->can('delete', $file)) {
+                echo $this->Form->postLink(
                 __('Delete File'),
-                Router::pathUrl('Files::delete', [$file->id]),
-                ['confirm' => __('Are you sure you want to delete # {0}?', $file->id), 'class' => 'side-nav-item']
-            ) ?>
-            <?= $this->Html->link(__('List Files'), ['_name' => 'files:list'], ['class' => 'side-nav-item']) ?>
-            <?= $this->Html->link(__('New File'), ['_name' => 'files:add'], ['class' => 'side-nav-item']) ?>
+                    Router::pathUrl('Files::delete', [$file->id]),
+                    ['confirm' => __('Are you sure you want to delete # {0}?', $file->id), 'class' => 'side-nav-item']
+                );
+            }
+            if ($identity->can('create', $file)) {
+                echo $this->Html->link(__('New File'), ['_name' => 'files:add'], ['class' => 'side-nav-item']);
+            }
+            ?>
         </div>
     </aside>
     <div class="column-responsive column-80">
@@ -57,6 +66,7 @@ use Cake\Routing\Router;
                 </tr>
             </table>
             <div class="related">
+            <?php if ($identity->can('create', new FileShareLink())): ?>
                 <h4><?= __('Related File Share Links') ?></h4>
                 <?= $this->Form->postButton(
                     'Create Share Link',
@@ -83,6 +93,7 @@ use Cake\Routing\Router;
                     </table>
                 </div>
                 <?php endif; ?>
+            <?php endif; ?>
             </div>
         </div>
     </div>

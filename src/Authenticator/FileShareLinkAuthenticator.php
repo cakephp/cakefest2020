@@ -29,7 +29,7 @@ class FileShareLinkAuthenticator extends AbstractAuthenticator
         $shareLinks = $this->getTableLocator()->get('FileShareLinks');
 
         try {
-            $shareLink = $shareLinks->findByToken($token)->firstOrFail();
+            $shareLink = $shareLinks->find('liveToken', ['token' => $token])->firstOrFail();
             return new Result($shareLink, ResultInterface::SUCCESS);
         } catch (RecordNotFoundException $e) {
             return new Result(null, ResultInterface::FAILURE_IDENTITY_NOT_FOUND, ['Invalid or missing token.']);

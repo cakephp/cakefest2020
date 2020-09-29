@@ -16,10 +16,13 @@ class UsersController extends AppController
         parent::beforeFilter($event);
 
         $this->Authentication->allowUnauthenticated(['add', 'login']);
+        // TODO add authorization checks.
+        $this->Authorization->skipAuthorization();
     }
 
     public function login()
     {
+        $this->Authorization->skipAuthorization();
         $result = $this->Authentication->getResult();
         // If the user is logged in send them away.
         if ($result->isValid()) {
@@ -33,6 +36,7 @@ class UsersController extends AppController
 
     public function logout()
     {
+        $this->Authorization->skipAuthorization();
         $this->Authentication->logout();
         return $this->redirect(['controller' => 'Users', 'action' => 'login']);
     }
