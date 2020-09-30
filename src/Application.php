@@ -16,6 +16,9 @@ declare(strict_types=1);
  */
 namespace App;
 
+use Authentication\AuthenticationService;
+use Authentication\AuthenticationServiceInterface;
+use Authentication\Middleware\AuthenticationMiddleware;
 use Cake\Core\Configure;
 use Cake\Core\Exception\MissingPluginException;
 use Cake\Error\Middleware\ErrorHandlerMiddleware;
@@ -57,6 +60,7 @@ class Application extends BaseApplication
         }
 
         // Load more plugins here
+        $this->addPlugin('Authentication');
     }
 
     /**
@@ -94,9 +98,28 @@ class Application extends BaseApplication
             // https://book.cakephp.org/4/en/controllers/middleware.html#cross-site-request-forgery-csrf-middleware
             ->add(new CsrfProtectionMiddleware([
                 'httponly' => true,
-            ]));
+            ]))
+            ->add(new AuthenticationMiddleware($this->getAuthService()));
 
         return $middlewareQueue;
+    }
+
+    protected function getAuthService(): AuthenticationService
+    {
+        $service = new AuthenticationService([
+            'unauthenticatedRedirect' => '/users/login',
+        ]);
+
+        // Load identifiers
+        $service->loadIdentifier('Authentication.Password');
+
+        // Load the authenticators, you want session first
+        $service->loadAuthenticator('Authentication.Session');
+        $service->loadAuthenticator('Authentication.Form', [
+            'loginUrl' => '/users/login',
+        ]);
+
+        return $service;
     }
 
     /**
