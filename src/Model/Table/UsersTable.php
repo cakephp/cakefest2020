@@ -106,4 +106,9 @@ class UsersTable extends Table
 
         return $rules;
     }
+
+    public function findAuth(Query $q, array $options): Query
+    {
+        return $q->contain('Groups');
+    }
 }

@@ -113,6 +113,11 @@ class Application extends BaseApplication
 
         // Load identifiers
         $service->loadIdentifier('Authentication.Password', [
+            'resolver' => [
+                'className' => 'Authentication.Orm',
+                'userModel' => 'Users',
+                'finder' => 'auth',
+            ],
             'fields' => [
                 IdentifierInterface::CREDENTIAL_USERNAME => 'email',
                 IdentifierInterface::CREDENTIAL_PASSWORD => 'password',
