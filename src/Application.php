@@ -18,6 +18,7 @@ namespace App;
 
 use Authentication\AuthenticationService;
 use Authentication\AuthenticationServiceInterface;
+use Authentication\Identifier\IdentifierInterface;
 use Authentication\Middleware\AuthenticationMiddleware;
 use Cake\Core\Configure;
 use Cake\Core\Exception\MissingPluginException;
@@ -111,12 +112,21 @@ class Application extends BaseApplication
         ]);
 
         // Load identifiers
-        $service->loadIdentifier('Authentication.Password');
+        $service->loadIdentifier('Authentication.Password', [
+            'fields' => [
+                IdentifierInterface::CREDENTIAL_USERNAME => 'email',
+                IdentifierInterface::CREDENTIAL_PASSWORD => 'password',
+            ]
+        ]);
 
         // Load the authenticators, you want session first
         $service->loadAuthenticator('Authentication.Session');
         $service->loadAuthenticator('Authentication.Form', [
             'loginUrl' => '/users/login',
+            'fields' => [
+                IdentifierInterface::CREDENTIAL_USERNAME => 'email',
+                IdentifierInterface::CREDENTIAL_PASSWORD => 'password',
+            ],
         ]);
 
         return $service;
