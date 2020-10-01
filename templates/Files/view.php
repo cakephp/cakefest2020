@@ -22,7 +22,7 @@ use Cake\Routing\Router;
                     ['confirm' => __('Are you sure you want to delete # {0}?', $file->id), 'class' => 'side-nav-item']
                 );
             }
-            if ($identity->can('create', $file)) {
+            if ($identity->can('add', $file)) {
                 echo $this->Html->link(__('New File'), ['_name' => 'files:add'], ['class' => 'side-nav-item']);
             }
             ?>

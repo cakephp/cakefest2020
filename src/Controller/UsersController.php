@@ -26,7 +26,7 @@ class UsersController extends AppController
         $result = $this->Authentication->getResult();
         // If the user is logged in send them away.
         if ($result->isValid()) {
-            $target = $this->Authentication->getLoginRedirect() ?? '/home';
+            $target = $this->Authentication->getLoginRedirect() ?? '/files';
             return $this->redirect($target);
         }
         if ($this->request->is('post') && !$result->isValid()) {
