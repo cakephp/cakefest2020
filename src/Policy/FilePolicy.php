@@ -18,6 +18,15 @@ class FilePolicy
         return ($user->getOriginalData() instanceof FileShareLink);
     }
 
+    protected function inGroup(File $file, IdentityInterface $user): bool
+    {
+        $groupIds = array_map(function ($group) {
+            return $group->id;
+        }, $user->getOriginalData()->groups);
+
+        return in_array($file->group_id, $groupIds);
+    }
+
     /**
      * Check if $user can create File
      *
@@ -25,7 +34,7 @@ class FilePolicy
      * @param App\Model\Entity\File $file
      * @return bool
      */
-    public function canCreate(IdentityInterface $user, File $file)
+    public function canAdd(IdentityInterface $user, File $file)
     {
         if ($this->isShareLink($user)) {
             return false;
@@ -45,8 +54,7 @@ class FilePolicy
         if ($this->isShareLink($user)) {
             return false;
         }
-        // TODO check the user's group/ownership.
-        return true;
+        return $this->inGroup($file, $user);
     }
 
     /**
@@ -61,8 +69,7 @@ class FilePolicy
         if ($this->isShareLink($user)) {
             return false;
         }
-        // TODO check the user's group/ownership.
-        return true;
+        return $this->inGroup($file, $user);
     }
 
     /**
@@ -77,7 +84,6 @@ class FilePolicy
         if ($this->isShareLink($user)) {
             return true;
         }
-        // TODO check the user's group/ownership.
-        return true;
+        return $this->inGroup($file, $user);
     }
 }

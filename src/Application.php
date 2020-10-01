@@ -195,13 +195,19 @@ class Application extends BaseApplication
         $service->loadAuthenticator('Authentication.Session');
         $service->loadAuthenticator('Authentication.Form', [
             'fields' => $fields,
-            'loginUrl' => '/users/login'
+            'loginUrl' => '/users/login',
         ]);
         // Fileshare links have their own authentication.
         $service->loadAuthenticator('FileShareLink');
 
         // Load identifiers
-        $service->loadIdentifier('Authentication.Password', compact('fields'));
+        $service->loadIdentifier('Authentication.Password', [
+            'fields' => $fields,
+            'resolver' => [
+                'className' => 'Authentication.Orm',
+                'finder' => 'auth',
+            ],
+        ]);
 
         return $service;
     }
