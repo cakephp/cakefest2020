@@ -105,4 +105,16 @@ class FileShareLinksTable extends Table
             'expires_at >=' => FrozenTime::now(),
         ]);
     }
+
+    public function findExpired(Query $query): Query
+    {
+        return $query->where(['expires_at <=' => FrozenTime::now()]);
+    }
+
+    public function deleteExpired(): void
+    {
+        $this->deleteAll([
+            'id IN' => $this->find('expired')->select(['id'])
+        ]);
+    }
 }
