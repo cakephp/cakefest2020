@@ -1,7 +1,7 @@
 version: '3'
 services:
   postgres:
-    image: postgres
+    image: postgres:13
     container_name: postgres
     environment:
       - POSTGRES_USER=my_app
