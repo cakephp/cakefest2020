@@ -41,3 +41,4 @@ nbproject/*
 .vscode
 # Sass preprocessor
 .sass-cache/
+.php_cs.cache
