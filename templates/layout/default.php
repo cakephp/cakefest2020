@@ -53,5 +53,6 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
     </main>
     <footer>
     </footer>
+    <?= $this->fetch('footerScript') ?>
 </body>
 </html>

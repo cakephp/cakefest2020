@@ -5,6 +5,7 @@ namespace App\Controller;
 
 use Cake\Event\EventInterface;
 use Cake\Log\Log;
+use Cake\View\JsonView;
 
 /**
  * Users Controller
@@ -118,20 +119,33 @@ class UsersController extends AppController
     public function login()
     {
         $this->request->allowMethod(['get', 'post']);
+        if ($this->request->is('post')) {
+            Log::debug('Login attempt for user ' . $this->request->getData('username'));
+        }
+
         $result = $this->Authentication->getResult();
+
+        if ($this->request->accepts('application/json')) {
+            $identity = $this->Authentication->getIdentity();
+            $this->set([
+                'valid' => $result->isValid(),
+                'identity' => $identity ? $identity->getOriginalData() : null,
+            ]);
+            $this->viewBuilder()->setOption('serialize', ['valid', 'identity']);
+
+            return;
+        }
+
         // regardless of POST or GET, redirect if user is logged in
         if ($result->isValid()) {
             $redirect = $this->request->getQuery('redirect', ['controller' => 'Pages', 'action' => 'display', 'home']);
+
             return $this->redirect($redirect);
         }
 
         // display error if user submitted and authentication failed
         if ($this->request->is(['post']) && !$result->isValid()) {
             $this->Flash->error(__('Invalid username or password'));
-        }
-
-        if ($this->request->is('post')) {
-            Log::debug('Login attempt for user ' . $this->request->getData('username'));
         }
     }
 
@@ -141,6 +155,7 @@ class UsersController extends AppController
         // regardless of POST or GET, redirect if user is logged in
         if ($result->isValid()) {
             $this->Authentication->logout();
+
             return $this->redirect('/');
         }
     }
