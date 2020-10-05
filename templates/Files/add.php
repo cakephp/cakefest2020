@@ -13,15 +13,12 @@
     </aside>
     <div class="column-responsive column-80">
         <div class="files form content">
-            <?= $this->Form->create($file) ?>
+            <?= $this->Form->create($file, ['type' => 'file']) ?>
             <fieldset>
                 <legend><?= __('Add File') ?></legend>
                 <?php
                     echo $this->Form->control('group_id', ['options' => $groups]);
-                    echo $this->Form->control('name');
-                    echo $this->Form->control('type');
-                    echo $this->Form->control('path');
-                    echo $this->Form->control('metadata');
+                    echo $this->Form->file('submittedFile');
                 ?>
             </fieldset>
             <?= $this->Form->button(__('Submit')) ?>
