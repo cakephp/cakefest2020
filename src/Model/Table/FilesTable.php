@@ -46,6 +46,7 @@ class FilesTable extends Table
         $this->setPrimaryKey('id');
 
         $this->addBehavior('Timestamp');
+        $this->addBehavior('Upload');
 
         $this->belongsTo('Groups', [
             'foreignKey' => 'group_id',

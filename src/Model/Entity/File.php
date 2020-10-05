@@ -39,5 +39,6 @@ class File extends Entity
         'created' => true,
         'modified' => true,
         'group' => true,
+        'submittedFile' => true,
     ];
 }
