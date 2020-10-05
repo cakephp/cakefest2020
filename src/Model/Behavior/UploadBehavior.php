@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Model\Behavior;
 
+use Cake\Core\Configure;
 use Cake\Datasource\EntityInterface;
 use Cake\Event\EventInterface;
 use Cake\ORM\Behavior;
@@ -20,7 +21,15 @@ class UploadBehavior extends Behavior
      *
      * @var array
      */
-    protected $_defaultConfig = [];
+    protected $_defaultConfig = [
+        'uploadPath' => ROOT . '/files/',
+    ];
+
+    public function initialize(array $config): void
+    {
+        parent::initialize($config);
+        $this->setConfig(Configure::read('UploadBehavior'));
+    }
 
     public function beforeMarshal(EventInterface $event, \ArrayObject $data, \ArrayObject $options): void
     {
@@ -30,7 +39,7 @@ class UploadBehavior extends Behavior
             $data['type'] = $submittedFile->getClientMediaType();
             $data['name'] = $submittedFile->getClientFilename();
             $data['metadata'] = \json_encode(['size' => $submittedFile->getSize()]);
-            $data['path'] = ROOT . '/files/' . Text::uuid();
+            $data['path'] = $this->getConfigOrFail('uploadPath') . Text::uuid();
         }
     }
 

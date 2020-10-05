@@ -19,5 +19,6 @@ services:
     environment:
       - WEB_DOCUMENT_ROOT=/application/webroot
       - DATABASE_URL=postgres://my_app:secret@postgres:5432/my_app
+      - UPLOAD_ABSOLUTE_PATH=/application/files/
     ports:
       - "8099:80"
