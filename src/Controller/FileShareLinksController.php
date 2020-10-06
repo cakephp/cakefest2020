@@ -70,6 +70,8 @@ class FileShareLinksController extends AppController
     {
         $this->request->allowMethod(['post', 'delete']);
         $fileShareLink = $this->FileShareLinks->get($id);
+        $this->Authorization->authorize($fileShareLink);
+
         if ($this->FileShareLinks->delete($fileShareLink)) {
             $this->Flash->success(__('The file share link has been deleted.'));
         } else {

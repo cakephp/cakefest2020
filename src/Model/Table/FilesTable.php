@@ -52,6 +52,9 @@ class FilesTable extends Table
             'foreignKey' => 'group_id',
             'joinType' => 'INNER',
         ]);
+        $this->hasMany('FileShareLinks', [
+            'foreignKey' => 'file_id',
+        ]);
     }
 
     /**

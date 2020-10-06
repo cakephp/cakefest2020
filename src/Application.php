@@ -109,7 +109,6 @@ class Application extends BaseApplication
             ]))
             // Add authentication.
             ->add(new AuthenticationMiddleware($this->getAuthService()))
-
             // Add authorization
             ->add(new AuthorizationMiddleware($this));
 

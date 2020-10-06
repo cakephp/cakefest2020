@@ -66,7 +66,7 @@ use Cake\Routing\Router;
                 </tr>
             </table>
             <div class="related">
-            <?php if ($identity->can('create', new FileShareLink())): ?>
+            <?php if ($identity->can('add', new FileShareLink())): ?>
                 <h4><?= __('Related File Share Links') ?></h4>
                 <?= $this->Form->postButton(
                     'Create Share Link',

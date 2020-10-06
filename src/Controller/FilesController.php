@@ -38,7 +38,7 @@ class FilesController extends AppController
     public function view($id = null)
     {
         $file = $this->Files->get($id, [
-            'contain' => ['Groups'],
+            'contain' => ['FileShareLinks', 'Groups'],
         ]);
         $this->Authorization->authorize($file);
 
