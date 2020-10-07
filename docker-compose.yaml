@@ -7,6 +7,9 @@ services:
       - POSTGRES_USER=my_app
       - POSTGRES_PASSWORD=secret
       - POSTGRES_DB=my_app
+      - PGUSER=my_app
+      - PGDATABASE=my_app
+      - PGPASSWORD=secret
     ports:
       - '5442:5432'
 
