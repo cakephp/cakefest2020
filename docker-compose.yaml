@@ -10,6 +10,8 @@ services:
       - PGUSER=my_app
       - PGDATABASE=my_app
       - PGPASSWORD=secret
+    volumes:
+      - ./:/application
     ports:
       - '5442:5432'
 
