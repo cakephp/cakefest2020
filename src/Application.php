@@ -48,6 +48,11 @@ class Application extends BaseApplication
             $this->bootstrapCli();
         }
 
+        $this->addPlugin('Tools');
+        $this->addPlugin('Queue');
+        $this->addPlugin('IdeHelper');
+        $this->addPlugin('StateMachine');
+
         /*
          * Only try to load DebugKit in development mode
          * Debug Kit should not be installed on a production system

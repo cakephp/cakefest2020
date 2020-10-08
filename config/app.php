@@ -415,4 +415,17 @@ return [
     'Session' => [
         'defaults' => 'php',
     ],
+
+    'Queue' => [
+        'workermaxruntime' => 3 * MINUTE,
+        'workertimeout' => 20 * MINUTE,
+        'defaultworkertimeout' => 6 * MINUTE,
+        'cleanuptimeout' => 30 * DAY,
+        'sleeptime' => 3,
+        'maxworkers' => 2,
+        'isSearchEnabled' => true,
+        'isStatisticEnabled' => true,
+        'multiserver' => true,
+        'log' => true,
+    ],
 ];

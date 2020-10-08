@@ -113,10 +113,12 @@ class Init extends AbstractMigration
             ->addColumn('path', 'string', [
                 'null' => false,
             ])
+            /*
             ->addColumn('metadata', 'jsonb', [
                 'null' => true,
                 'default' => null,
             ])
+            */
             ->addColumn('created', 'datetime', [
                 'null' => false,
             ])
