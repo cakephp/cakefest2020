@@ -50,7 +50,33 @@
                     <th><?= __('Modified') ?></th>
                     <td><?= h($file->modified) ?></td>
                 </tr>
+                <tr>
+                    <th><?= __('Processed') ?></th>
+                    <td><?= ($file->processed) ? 'Yes' : 'No' ?></td>
+                </tr>
+                <tr>
+                    <th><?= __('Published') ?></th>
+                    <td><?= ($file->published) ? 'Yes' : 'No' ?></td>
+                </tr>
             </table>
+
+            <?php
+            /*
+            $url = [
+                'controller' => 'Graph',
+                'action' => 'draw',
+                '?' => [
+                    'state-machine' => $file->item_state->state_machine,
+                    'process' => $file->item_state->process,
+                    'highlight-state' => $file->item_state->state,
+                ],
+            ];
+            $image = $this->Html->image($url);
+            echo $this->Html->link($image, $url, ['escapeTitle' => false, 'target' => '_blank']);
+            */
+
+            echo $this->Form->postLink('Start', ['action' => 'view', $file->id], ['class' => 'button btn btn-secondary', 'confirm' => 'Sure?']) . ' ';
+            ?>
         </div>
     </div>
 </div>

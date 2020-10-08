@@ -28,6 +28,7 @@ use Cake\Validation\Validator;
  * @method \App\Model\Entity\File[]|\Cake\Datasource\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
  *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
+ * @property \StateMachine\Model\Table\StateMachineItemsTable&\Cake\ORM\Association\HasOne $ItemStates
  */
 class FilesTable extends Table
 {
@@ -50,6 +51,12 @@ class FilesTable extends Table
         $this->belongsTo('Groups', [
             'foreignKey' => 'group_id',
             'joinType' => 'INNER',
+        ]);
+
+        $this->hasOne('ItemStates', [
+            'className' => 'StateMachine.StateMachineItems',
+            'foreignKey' => 'identifier',
+            'conditions' => ['ItemStates.state_machine' => 'FileProcessing'],
         ]);
     }
 

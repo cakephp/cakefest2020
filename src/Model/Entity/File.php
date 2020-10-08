@@ -18,6 +18,9 @@ use Cake\ORM\Entity;
  * @property \Cake\I18n\FrozenTime $modified
  *
  * @property \App\Model\Entity\Group $group
+ * @property \StateMachine\Model\Entity\StateMachineItem|null $item_state
+ * @property bool $processed
+ * @property bool $published
  */
 class File extends Entity
 {
@@ -31,13 +34,7 @@ class File extends Entity
      * @var array
      */
     protected $_accessible = [
-        'group_id' => true,
-        'name' => true,
-        'type' => true,
-        'path' => true,
-        'metadata' => true,
-        'created' => true,
-        'modified' => true,
-        'group' => true,
+        '*' => true,
+        'id' => false,
     ];
 }

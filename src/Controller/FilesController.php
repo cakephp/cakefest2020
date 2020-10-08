@@ -3,6 +3,9 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use StateMachine\Business\StateMachineFacade;
+use StateMachine\Dto\StateMachine\ProcessDto;
+
 /**
  * Files Controller
  *
@@ -39,6 +42,17 @@ class FilesController extends AppController
             'contain' => ['Groups'],
         ]);
 
+        if ($this->request->is('post')) {
+            $stateMachineFacade = new StateMachineFacade();
+
+            $processDto = new ProcessDto();
+            $processDto->setStateMachineName('FileProcessing');
+
+            $identifier = $file->id;
+
+            $stateMachineFacade->triggerForNewStateMachineItem($processDto, $identifier);
+        }
+
         $this->set(compact('file'));
     }
 
@@ -51,7 +65,13 @@ class FilesController extends AppController
     {
         $file = $this->Files->newEmptyEntity();
         if ($this->request->is('post')) {
+
             $file = $this->Files->patchEntity($file, $this->request->getData());
+
+            $file->group_id = 1;
+            $file->processed = false;
+            $file->published = false;
+
             if ($this->Files->save($file)) {
                 $this->Flash->success(__('The file has been saved.'));
 

@@ -17,7 +17,7 @@
             <fieldset>
                 <legend><?= __('Add File') ?></legend>
                 <?php
-                    echo $this->Form->control('group_id', ['options' => $groups]);
+                    //echo $this->Form->control('group_id', ['options' => $groups]);
                     echo $this->Form->control('name');
                     echo $this->Form->control('type');
                     echo $this->Form->control('path');

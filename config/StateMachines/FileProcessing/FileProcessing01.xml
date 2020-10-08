@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<statemachine xmlns="http://static.spryker.com/release-app/state-machine-01.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema">
+
+    <process name="FileProcessing01" main="true">
+        <states>
+            <state name="init" display="initialized"/>
+            <state name="processed"/>
+            <state name="pending"/>
+            <state name="published"/>
+            <state name="closed"/>
+        </states>
+
+        <transitions>
+            <transition happy="true">
+                <source>init</source>
+                <target>processed</target>
+                <event>process</event>
+            </transition>
+
+            <transition>
+                <source>processed</source>
+                <target>pending</target>
+                <event>decide</event>
+            </transition>
+            <transition happy="true" condition="CanBeAutoPublished">
+                <source>processed</source>
+                <target>published</target>
+                <event>decide</event>
+            </transition>
+
+            <transition>
+                <source>pending</source>
+                <target>published</target>
+                <event>publish</event>
+            </transition>
+            <transition happy="true">
+                <source>published</source>
+                <target>closed</target>
+                <event>notify</event>
+            </transition>
+        </transitions>
+
+        <events>
+            <event name="process" onEnter="true"/>
+            <event name="decide" onEnter="true"/>
+            <event name="publish" manual="true" command="Publish"/>
+            <event name="notify" onEnter="true" command="NotifyUser"/>
+        </events>
+
+    </process>
+
+</statemachine>
