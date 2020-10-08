@@ -136,5 +136,10 @@ class LoadFilesCommand extends Command
             ->values($query)
             ->execute()
             ->closeCursor();
+
+        $connection->newQuery()
+            ->update($filesTable->getTable())
+            ->set('metadata', $query->newExpr("metadata - '_tag' "))
+            ->execute();
     }
 }
