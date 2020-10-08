@@ -113,7 +113,7 @@ class Init extends AbstractMigration
             ->addColumn('path', 'string', [
                 'null' => false,
             ])
-            ->addColumn('metadata', 'json', [
+            ->addColumn('metadata', 'jsonb', [
                 'null' => true,
                 'default' => null,
             ])

@@ -30,7 +30,7 @@ CREATE TABLE public.files (
     name character varying(255) NOT NULL,
     type character varying(255) NOT NULL,
     path character varying(255) NOT NULL,
-    metadata json,
+    metadata jsonb,
     created timestamp without time zone NOT NULL,
     modified timestamp without time zone NOT NULL
 );
