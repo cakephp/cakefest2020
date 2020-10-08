@@ -51,6 +51,13 @@ class FilesTable extends Table
             'foreignKey' => 'group_id',
             'joinType' => 'INNER',
         ]);
+
+        $this->belongsToMany('Tags', [
+            'joinTable' => 'tagged',
+            'foreignKey' => 'foreign_key',
+            'associationForeignKey' => 'tag_id',
+            'conditions' => ['Tagged.table_alias' => 'Files'],
+        ]);
     }
 
     /**
@@ -101,5 +108,20 @@ class FilesTable extends Table
         $rules->add($rules->existsIn(['group_id'], 'Groups'), ['errorField' => 'group_id']);
 
         return $rules;
+    }
+
+
+    // $filesTable->find('taggedWith', ['tag' => 'tag1'])
+    public function findTaggedWith(Query $query, array $options)
+    {
+        $tag = $options['tag'];
+        $query->innerJoinWith('Tags', function (Query $q) use ($tag) {
+            $q->where(['Tags.name' => $tag]);
+
+            return $q;
+        })
+        ->distinct(['Files.id']);
+
+        return $query;
     }
 }
