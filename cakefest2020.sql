@@ -462,6 +462,56 @@ ALTER TABLE ONLY public.tags
 ALTER TABLE ONLY public.users
     ADD CONSTRAINT users_pkey PRIMARY KEY (id);
 
+--
+-- Name: file_share_links; Type: TABLE; Schema: public; Owner: mark
+--
+
+CREATE TABLE public.file_share_links (
+    id integer NOT NULL,
+    file_id integer NOT NULL,
+    token character(64) NOT NULL,
+    expires_at timestamp without time zone NOT NULL,
+    created timestamp without time zone NOT NULL,
+    modified timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: file_share_links_id_seq; Type: SEQUENCE; Schema: public; Owner: mark
+--
+
+CREATE SEQUENCE public.file_share_links_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+--
+-- Name: file_share_links id; Type: DEFAULT; Schema: public; Owner: mark
+--
+
+ALTER TABLE ONLY public.file_share_links ALTER COLUMN id SET DEFAULT nextval('public.file_share_links_id_seq'::regclass);
+
+
+--
+-- Name: file_share_links file_share_links_pkey; Type: CONSTRAINT; Schema: public; Owner: mark
+--
+
+ALTER TABLE ONLY public.file_share_links
+    ADD CONSTRAINT file_share_links_pkey PRIMARY KEY (id);
+
+--
+-- Name: file_share_links file_share_file_idx; Type: FK CONSTRAINT; Schema: public; Owner: mark
+--
+
+ALTER TABLE ONLY public.file_share_links
+    ADD CONSTRAINT file_share_file_idx FOREIGN KEY (file_id) REFERENCES public.files(id);
+
+--
+-- PostgreSQL database dump complete
+--
 
 --
 -- PostgreSQL database dump complete

@@ -118,6 +118,7 @@ class UsersController extends AppController
 
     public function login()
     {
+        $this->Authorization->skipAuthorization();
         $this->request->allowMethod(['get', 'post']);
         if ($this->request->is('post')) {
             Log::debug('Login attempt for user ' . $this->request->getData('username'));
@@ -138,7 +139,7 @@ class UsersController extends AppController
 
         // regardless of POST or GET, redirect if user is logged in
         if ($result->isValid()) {
-            $redirect = $this->request->getQuery('redirect', ['controller' => 'Pages', 'action' => 'display', 'home']);
+            $redirect = $this->request->getQuery('redirect', ['_name' => 'files:list']);
 
             return $this->redirect($redirect);
         }
@@ -151,6 +152,8 @@ class UsersController extends AppController
 
     public function logout()
     {
+        $this->Authorization->skipAuthorization();
+
         $result = $this->Authentication->getResult();
         // regardless of POST or GET, redirect if user is logged in
         if ($result->isValid()) {

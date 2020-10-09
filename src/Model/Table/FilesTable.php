@@ -7,6 +7,8 @@ use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
+use RuntimeException;
+use SebastianBergmann\Environment\Runtime;
 
 /**
  * Files Model
@@ -51,6 +53,9 @@ class FilesTable extends Table
         $this->belongsTo('Groups', [
             'foreignKey' => 'group_id',
             'joinType' => 'INNER',
+        ]);
+        $this->hasMany('FileShareLinks', [
+            'foreignKey' => 'file_id',
         ]);
     }
 
@@ -102,5 +107,17 @@ class FilesTable extends Table
         $rules->add($rules->existsIn(['group_id'], 'Groups'), ['errorField' => 'group_id']);
 
         return $rules;
+    }
+
+    public function findForGroups(Query $query, $options): Query
+    {
+        if (empty($options['groups'])) {
+            throw new RuntimeException('Need some groups');
+        }
+        $groupIds = array_map(function ($group) {
+            return $group->id;
+        }, $options['groups']);
+
+        return $query->where(['Files.group_id IN' => $groupIds]);
     }
 }

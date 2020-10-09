@@ -21,7 +21,8 @@ class FilesController extends AppController
         $this->paginate = [
             'contain' => ['Groups'],
         ];
-        $files = $this->paginate($this->Files);
+        $query = $this->Authorization->applyScope($this->Files->find());
+        $files = $this->paginate($query);
 
         $this->set(compact('files'));
     }
@@ -36,7 +37,7 @@ class FilesController extends AppController
     public function view($id = null)
     {
         $file = $this->Files->get($id, [
-            'contain' => ['Groups'],
+            'contain' => ['Groups', 'FileShareLinks'],
         ]);
 
         $this->set(compact('file'));
@@ -50,6 +51,8 @@ class FilesController extends AppController
     public function add()
     {
         $file = $this->Files->newEmptyEntity();
+        $this->Authorization->authorize($file);
+
         if ($this->request->is('post')) {
             $file = $this->Files->patchEntity($file, $this->request->getData());
             if ($this->Files->save($file)) {
