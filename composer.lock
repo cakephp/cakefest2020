@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0a55492ab2d87b222ad71a53578d97ff",
+    "content-hash": "99c39bb7953a1b8a2136efae4acfdd42",
     "packages": [
         {
             "name": "aura/intl",
@@ -684,6 +684,70 @@
             "time": "2019-05-27T13:12:22+00:00"
         },
         {
+            "name": "enqueue/redis",
+            "version": "0.9.12",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-enqueue/redis.git",
+                "reference": "fda816acc6483ee6877d365085547bb7b7aba307"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-enqueue/redis/zipball/fda816acc6483ee6877d365085547bb7b7aba307",
+                "reference": "fda816acc6483ee6877d365085547bb7b7aba307",
+                "shasum": ""
+            },
+            "require": {
+                "enqueue/dsn": "^0.9",
+                "php": "^7.1.3",
+                "queue-interop/queue-interop": "^0.7|^0.8",
+                "ramsey/uuid": "^3"
+            },
+            "require-dev": {
+                "enqueue/null": "0.9.x-dev",
+                "enqueue/test": "0.9.x-dev",
+                "phpunit/phpunit": "~5.4.0",
+                "predis/predis": "^1.1",
+                "queue-interop/queue-spec": "^0.6"
+            },
+            "suggest": {
+                "ext-redis": "If you'd like to use phpredis extension."
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.9.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Enqueue\\Redis\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Message Queue Redis Transport",
+            "homepage": "https://enqueue.forma-pro.com/",
+            "keywords": [
+                "messaging",
+                "queue",
+                "redis"
+            ],
+            "support": {
+                "docs": "https://github.com/php-enqueue/enqueue-dev/blob/master/docs/index.md",
+                "email": "opensource@forma-pro.com",
+                "forum": "https://gitter.im/php-enqueue/Lobby",
+                "issues": "https://github.com/php-enqueue/enqueue-dev/issues",
+                "source": "https://github.com/php-enqueue/enqueue-dev"
+            },
+            "time": "2019-06-07T00:32:02+00:00"
+        },
+        {
             "name": "enqueue/simple-client",
             "version": "0.9.12",
             "source": {
@@ -1079,6 +1143,85 @@
                 "source": "https://github.com/paragonie/random_compat"
             },
             "time": "2018-07-02T15:55:56+00:00"
+        },
+        {
+            "name": "predis/predis",
+            "version": "v1.1.6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/predis/predis.git",
+                "reference": "9930e933c67446962997b05201c69c2319bf26de"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/predis/predis/zipball/9930e933c67446962997b05201c69c2319bf26de",
+                "reference": "9930e933c67446962997b05201c69c2319bf26de",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.9"
+            },
+            "require-dev": {
+                "cweagans/composer-patches": "^1.6",
+                "phpunit/phpunit": "~4.8"
+            },
+            "suggest": {
+                "ext-curl": "Allows access to Webdis when paired with phpiredis",
+                "ext-phpiredis": "Allows faster serialization and deserialization of the Redis protocol"
+            },
+            "type": "library",
+            "extra": {
+                "composer-exit-on-patch-failure": true,
+                "patches": {
+                    "phpunit/phpunit-mock-objects": {
+                        "Fix PHP 7 and 8 compatibility": "./tests/phpunit_mock_objects.patch"
+                    },
+                    "phpunit/phpunit": {
+                        "Fix PHP 7 compatibility": "./tests/phpunit_php7.patch",
+                        "Fix PHP 8 compatibility": "./tests/phpunit_php8.patch"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Predis\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Daniele Alessandri",
+                    "email": "suppakilla@gmail.com",
+                    "homepage": "http://clorophilla.net",
+                    "role": "Creator & Maintainer"
+                },
+                {
+                    "name": "Till Krüss",
+                    "homepage": "https://till.im",
+                    "role": "Maintainer"
+                }
+            ],
+            "description": "Flexible and feature-complete Redis client for PHP and HHVM",
+            "homepage": "http://github.com/predis/predis",
+            "keywords": [
+                "nosql",
+                "predis",
+                "redis"
+            ],
+            "support": {
+                "issues": "https://github.com/predis/predis/issues",
+                "source": "https://github.com/predis/predis/tree/v1.1.6"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/sponsors/tillkruss",
+                    "type": "github"
+                }
+            ],
+            "time": "2020-09-11T19:18:05+00:00"
         },
         {
             "name": "psr/container",

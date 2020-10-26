@@ -415,4 +415,18 @@ return [
     'Session' => [
         'defaults' => 'php',
     ],
+
+    'Queue' => [
+        'default' => [
+            // A DSN for your configured backend. default: null
+            'url' => 'redis:',
+
+            // The queue that will be used for sending messages. default: default
+            // This can be overriden when queuing or processing messages
+            'queue' => 'default',
+
+            // The name of a configured logger, default: null
+            'logger' => 'stdout',
+        ]
+    ],
 ];
