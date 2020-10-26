@@ -427,6 +427,6 @@ return [
 
             // The name of a configured logger, default: null
             'logger' => 'stdout',
-        ]
+        ],
     ],
 ];
